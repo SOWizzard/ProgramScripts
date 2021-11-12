@@ -3,35 +3,27 @@
 import csv
 import subprocess
 
-def die(message: str):
-    if len(message) != 0:
-        from sys import stderr
-        print(message, file=stderr)
-    exit(1)
-
 def determine_distro():
     global current_distro
     from platform import system
-    if system() != "Linux":
-        die("Non-Linux platforms are not supported")
+    assert system() == "Linux", "Non-Linux platforms are not supported"
+    if current_distro != None: # The distro is already known
+        return
+    current_distro = subprocess.check_output("hostnamectl | grep -E '^Operating System' | sed 's/.*://'", shell = True)
+    current_distro = current_distro.decode("utf-8")
+    current_distro = current_distro.lstrip().rstrip().lower()
+    assert len(current_distro) > 0
+    # NOTE: Values for current_distro have to be the same as in Packages.csv
+    if "ubuntu" in current_distro:
+        current_distro = "ubuntu"
+    elif "debian" in current_distro:
+        current_distro = "debian"
+    elif "arch" in current_distro:
+        current_distro = "arch"
+    elif "fedora" in current_distro:
+        current_distro = "fedora"
     else:
-        if current_distro != None:
-            return
-        current_distro = subprocess.check_output("hostnamectl | grep -E '^Operating System' | sed 's/.*://'", shell = True)
-        current_distro = current_distro.decode("utf-8")
-        current_distro = current_distro.lstrip().rstrip().lower()
-        assert len(current_distro) > 0
-        # NOTE: Values for current_distro have to be the same as in Packages.csv
-        if "ubuntu" in current_distro:
-            current_distro = "ubuntu"
-        elif "debian" in current_distro:
-            current_distro = "debian"
-        elif "arch" in current_distro:
-            current_distro = "arch"
-        elif "fedora" in current_distro:
-            current_distro = "fedora"
-        else:
-            assert False, "Distro not supported"
+        assert False, "Distro not supported"
 
 def grab_package_name(name: str):
     global current_distro
