@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import csv
+import subprocess
 
 def die(message: str):
     if len(msg) != 0:
@@ -16,13 +17,18 @@ def determine_distro():
     else:
         if current_distro != None:
             return
-        from shutil import which
+        current_distro = subprocess.check_output("hostnamectl | grep -E '^Operating System' | sed 's/.*://'", shell = True)
+        current_distro = current_distro.lstrip().rstrip()
+        assert len(current_distro) > 0
         # NOTE: Values for current_distro have to be the same as in Packages.csv
-        if which('pacman') != None:
-            current_distro = 'arch'
-        if which('apt') != None:
-            # TODO: Find a way to differentiate Ubuntu from Debian!
-            current_distro = 'debian'
+        if "ubuntu" in current_distro.lower():
+            current_distro = "ubuntu"
+        elif "debian" in current_distro.lower():
+            current_distro = "debian"
+        elif "arch" in current_distro.lower():
+            current_distro = "arch"
+        elif "fedora" in current_distro.lower():
+            current_distro = "fedora"
 
 def grab_package_name(name: str):
     global current_distro
