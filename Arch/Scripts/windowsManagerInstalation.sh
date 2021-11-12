@@ -20,10 +20,6 @@ pacman --noconfirm --needed -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-s
 systemctl enable lightdm
 
 
-#Xprofile configuration
-projectDir="$(git rev-parse --show-toplevel)"
-cp "${projectDir}/Arch/CFG/xprofile/xprofile" "${HOME}/.xprofile"  
-
 
 #I3
 bash ./i3.sh
