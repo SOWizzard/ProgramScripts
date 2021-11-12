@@ -10,7 +10,7 @@ fi
 [ -z "$1" ] && error "choose a user"
 
 #Basic packages
-pacman --noconfirm --needed -S man-db man-pages texinfo inetutils netctl dhcpcd wpa_supplicant dialog linux-headers network-manager-applet sudo nvim nano git base-devel
+pacman --noconfirm --needed -S man-db man-pages texinfo inetutils netctl dhcpcd wpa_supplicant dialog linux-headers network-manager-applet sudo nvim nano git base-devel feh
 
 #Xorg
 pacman --noconfirm --needed -S xorg-server xorg-xinit

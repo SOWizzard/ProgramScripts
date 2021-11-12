@@ -16,7 +16,7 @@ export BROWSER="firefox"
 picom -b
 
 # Random Photo Every Login
-#feh --bg-fill --randomize ~/Pictures/wallpapers/* &
+feh --bg-fill --randomize ~/Pictures/wallpapers/*
 
 # XDG Paths
 export XDG_CONFIG_HOME=$HOME/.config
