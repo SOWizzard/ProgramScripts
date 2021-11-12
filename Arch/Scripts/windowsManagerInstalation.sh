@@ -19,18 +19,11 @@ pacman --noconfirm --needed -S xorg-server xorg-xinit
 pacman --noconfirm --needed -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 systemctl enable lightdm
 
-#Logging in user
-su $1
 
 #Xprofile configuration
 projectDir="$(git rev-parse --show-toplevel)"
 cp "${projectDir}/Arch/CFG/xprofile/xprofile" "${HOME}/.xprofile"  
 
-#YAY
-git clone https://aur.archlinux.org/yay-bin.git ~/yay-bin
-pushd ~/yay-bin
-makepkg -si
-popd
 
 #I3
 bash ./i3.sh
