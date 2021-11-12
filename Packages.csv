@@ -1,6 +1,6 @@
 global,debian,ubuntu,arch,fedora
 i3,i3,i3,i3-wm;i3status;i3lock,i3
-xorg,xorg,xorg,xorg,xorg
-lightdm,lightdm,lightdm,lightdm,lightdm
+xorg,xorg,xorg,xorg-server;xorg-xinit,xorg
+lightdm,lightdm,lightdm,lightdm;lightdm-gtk-greeter;lightdm-gtk-greeter-settings,lightdm
 firefox,firefox,firefox,firefox,firefox
 nautilus,gnome-nautilus,nautilus,nautilus,nautilus
