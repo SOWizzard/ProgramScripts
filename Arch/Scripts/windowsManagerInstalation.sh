@@ -1,23 +1,34 @@
 #!/bin/bash
 
+error() { printf "%s\n" "$1" >&2; exit 1; }
+
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
   exit
 fi
 
+[ -z "$1" ] && error "choose a user"
+
 #Basic packages
-pacman -S man-db man-pages texinfo inetutils netctl dhcpcd wpa_supplicant dialog linux-headers network-manager-applet sudo nvim nano
+pacman --noconfirm --needed -S man-db man-pages texinfo inetutils netctl dhcpcd wpa_supplicant dialog linux-headers network-manager-applet sudo nvim nano git base-devel
 
 #Xorg
-pacman -S xorg-server xorg-xinit
+pacman --noconfirm --needed -S xorg-server xorg-xinit
 
 #DM
-pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
+pacman --noconfirm --needed -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 systemctl enable lightdm
+
+#Logging in user
+su $1
+#YAY
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg -si
 
 #I3
 bash ./i3.sh
 
 #Browser #File manager
-pacman -S firefox
-pacman -S nautilus
+pacman --noconfirm --needed -S firefox
+pacman --noconfirm --needed -S nautilus

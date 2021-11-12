@@ -4,9 +4,9 @@ import csv
 import subprocess
 
 def die(message: str):
-    if len(msg) != 0:
+    if len(message) != 0:
         from sys import stderr
-        print(msg, file=stderr)
+        print(message, file=stderr)
     exit(1)
 
 def determine_distro():
@@ -18,17 +18,20 @@ def determine_distro():
         if current_distro != None:
             return
         current_distro = subprocess.check_output("hostnamectl | grep -E '^Operating System' | sed 's/.*://'", shell = True)
-        current_distro = current_distro.lstrip().rstrip()
+        current_distro = current_distro.decode("utf-8")
+        current_distro = current_distro.lstrip().rstrip().lower()
         assert len(current_distro) > 0
         # NOTE: Values for current_distro have to be the same as in Packages.csv
-        if "ubuntu" in current_distro.lower():
+        if "ubuntu" in current_distro:
             current_distro = "ubuntu"
-        elif "debian" in current_distro.lower():
+        elif "debian" in current_distro:
             current_distro = "debian"
-        elif "arch" in current_distro.lower():
+        elif "arch" in current_distro:
             current_distro = "arch"
-        elif "fedora" in current_distro.lower():
+        elif "fedora" in current_distro:
             current_distro = "fedora"
+        else:
+            assert False, "Distro not supported"
 
 def grab_package_name(name: str):
     global current_distro
@@ -37,8 +40,9 @@ def grab_package_name(name: str):
     with open('Packages.csv', newline='') as packages:
         packages_reader = csv.DictReader(packages)
         for row in packages_reader:
-            if row['global'] == name:
-                print(row[current_distro])
+            if str(row['global']) == name:
+                distro_package = str(row[current_distro])
+                print(distro_package)
                 return
 
 current_distro = None

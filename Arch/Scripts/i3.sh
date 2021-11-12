@@ -2,10 +2,9 @@
 
 
 sudo pacman -Syy
-sudo pacman -S picom
-sudo pacman -S i3-gaps i3status i3lock dmenu
+sudo pacman --noconfirm --needed -S picom
+sudo pacman --noconfirm --needed -S i3-gaps i3status i3lock dmenu
 yay -S autotiling
-
 
 projectDir="$(git rev-parse --show-toplevel)"
 mkdir -p "$HOME/.config/i3"
