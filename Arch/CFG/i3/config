@@ -1,0 +1,214 @@
+# vim: filetype=i3config
+
+# This config file will use environment variables such as $BROWSER and $TERMINAL.
+
+exec --no-startup-id- nm-applet
+
+bar {
+  position top
+  status_command i3status
+}
+
+exec_always --no-startup-id autotiling
+exec_always --no-startup-id picom -b
+
+#
+# #---Basic Definitions---# #
+smart_gaps on
+smart_borders on
+set $inner_gaps 15
+set $outer_gaps 0
+set $mod Mod1
+set $shutdown sudo -A shutdown -h now
+set $reboot sudo -A reboot
+set $lock i3lock
+set $suspend sudo systemctl suspend
+set $hibernate sudo -A systemctl hibernate
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# #---Gaps---# #
+for_window [class="^.*"] border pixel 2
+gaps inner $inner_gaps
+gaps outer $outer_gaps
+
+# #---Basic Bindings---# #
+bindsym $mod+Return 		         exec i3-sensible-terminal
+bindsym $mod+Shift+Return	       exec i3-sensible-terminal --working-directory $(pwd)
+
+bindsym $mod+Shift+Escape	       exec --no-startup-id $hibernate
+
+# bindsym $mod+BackSpace
+# bindsym $mod+Shift+BackSpace	   exec --no-startup-id prompt "Reboot computer?" $reboot
+
+# space
+
+
+# #---Letter Key Bindings---# #
+bindsym $mod+q			            [con_id="__focused__" instance="^(?!dropdown_).*$"] kill
+bindsym $mod+Shift+q		        [con_id="__focused__" instance="^(?!dropdown_).*$"] exec --no-startup-id kill -9 `xdotool getwindowfocus getwindowpid`
+
+# w
+bindsym $mod+w 			            exec --no-startup-id $BROWSER
+
+# c
+bindsym $mod+c 			            exec --no-startup-id lock
+bindsym $mod+Shift+c		        exec --no-startup-id $suspend
+
+# e
+bindsym $mod+e 			            exec --no-startup-id nautilus
+
+# r
+bindsym $mod+Shift+r            restart
+
+# t
+bindsym $mod+t 			            exec $term -e ytop
+bindsym $mod+Shift+t            focus mode_toggle
+
+# y
+
+# u
+bindsym $mod+u                  [urgent=latest] focus
+
+# i
+bindsym $mod+i                  fullscreen disable; floating enable; resize set 1280 720; sticky enable; move position 4792 53
+
+# o
+
+# a
+
+# s
+bindsym $mod+s        			    sticky toggle;
+bindsym $mod+Shift+s			      split toggle
+
+# d
+bindsym $mod+d                  exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -b -i'
+
+#e
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# f
+bindsym $mod+f			            fullscreen toggle
+bindsym $mod+Shift+f 	          floating toggle
+
+# g
+bindsym $mod+g		              gaps inner current set $inner_gaps; gaps outer current set $outer_gaps
+bindsym $mod+Shift+g		        gaps inner current set 0; gaps outer current set 0
+
+# h
+bindsym $mod+h			            focus left
+bindsym $mod+Shift+h		        move left 30
+bindsym $mod+Ctrl+h		          move workspace to output left
+
+# j
+bindsym $mod+j			            focus down
+bindsym $mod+Shift+j		        move down 30
+bindsym $mod+Ctrl+j		          move workspace to output down
+
+# k
+bindsym $mod+k			            focus up
+bindsym $mod+Shift+k		        move up 30
+bindsym $mod+Ctrl+k		          move workspace to output up
+
+# l
+bindsym $mod+l			            focus right
+bindsym $mod+Shift+l		        move right 30
+bindsym $mod+Ctrl+l		          move workspace to output right
+
+
+# z
+
+# x
+bindsym $mod+x 			            exec --no-startup-id $reboot
+bindsym $mod+Shift+x		        exec --no-startup-id $shutdown
+
+# p
+
+# v
+
+# b
+bindsym $mod+b			            exec --no-startup-id feh --bg-fill --randomize ~/Pictures/wallpapers/*
+
+# n
+
+# m
+
+
+# #---Workspace Bindings---# #
+bindsym $mod+Tab		          workspace next
+bindsym $mod+Shift+Tab		      workspace previous
+bindsym $mod+apostrophe		      split horizontal ;; exec $term
+bindsym $mod+slash		          split vertical ;; exec $term
+bindsym $mod+Shift+slash	      kill
+bindsym $mod+backslash		      workspace back_and_forth
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Assign Workspaces:
+
+# Assigning autofloat
+
+# switch to workspace
+bindsym $mod+1		workspace $ws1
+bindsym $mod+2		workspace $ws2
+bindsym $mod+3		workspace $ws3
+bindsym $mod+4		workspace $ws4
+bindsym $mod+5		workspace $ws5
+bindsym $mod+6		workspace $ws6
+bindsym $mod+7		workspace $ws7
+bindsym $mod+8		workspace $ws8
+bindsym $mod+9		workspace $ws9
+bindsym $mod+0		workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1	move container to workspace $ws1
+bindsym $mod+Shift+2	move container to workspace $ws2
+bindsym $mod+Shift+3	move container to workspace $ws3
+bindsym $mod+Shift+4	move container to workspace $ws4
+bindsym $mod+Shift+5	move container to workspace $ws5
+bindsym $mod+Shift+6	move container to workspace $ws6
+bindsym $mod+Shift+7	move container to workspace $ws7
+bindsym $mod+Shift+8	move container to workspace $ws8
+bindsym $mod+Shift+9	move container to workspace $ws9
+bindsym $mod+Shift+0	move container to workspace $ws10
+
+
+# #---Function Buttons---# #
+bindsym $mod+F1		        restart
+
+# #---Arrow Keys---# #
+bindsym $mod+Left		      focus left
+bindsym $mod+Shift+Left   resize shrink width 5 px or 5 ppt
+bindsym $mod+Ctrl+Left		move workspace to output right
+bindsym $mod+Down		      focus down
+bindsym $mod+Shift+Down   resize shrink height 5 px or 5 ppt
+bindsym $mod+Ctrl+Down		move workspace to output up
+bindsym $mod+Up			      focus up
+bindsym $mod+Shift+Up     resize grow height 5 px or 5 ppt
+bindsym $mod+Ctrl+Up		  move workspace to output down
+bindsym $mod+Right 		    focus right
+bindsym $mod+Shift+Right  resize grow width 5 px or 5 ppt
+bindsym $mod+Ctrl+Right		move workspace to output left
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% #decrease sound volume
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+
+# Window borders
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #abb2bf
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #ffffff
