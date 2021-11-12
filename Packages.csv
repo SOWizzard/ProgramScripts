@@ -1,0 +1,6 @@
+global,debian,ubuntu,arch,fedora
+i3,i3,i3,i3-wm;i3status;i3lock,i3
+xorg,xorg,xorg,xorg,xorg
+lightdm,lightdm,lightdm,lightdm,lightdm
+firefox,firefox,firefox,firefox,firefox
+nautilus,gnome-nautilus,nautilus,nautilus,nautilus
