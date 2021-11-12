@@ -28,8 +28,9 @@ cp "${projectDir}/Arch/CFG/xprofile/xprofile" "${HOME}/.xprofile"
 
 #YAY
 git clone https://aur.archlinux.org/yay-bin.git ~/yay-bin
-cd ~/yay-bin
+pushd ~/yay-bin
 makepkg -si
+popd
 
 #I3
 bash ./i3.sh
