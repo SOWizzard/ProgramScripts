@@ -9,10 +9,9 @@ def determine_distro():
     assert system() == "Linux", "Non-Linux platforms are not supported"
     if current_distro != None: # The distro is already known
         return
-    current_distro = subprocess.check_output("hostnamectl | grep -E '^Operating System' | sed 's/.*://'", shell = True)
+    current_distro = subprocess.check_output("cat /etc/os-release | grep -E '^ID=.*' | sed 's/.*=//'", shell = True)
     current_distro = current_distro.decode("utf-8")
     current_distro = current_distro.lstrip().rstrip().lower()
-    assert len(current_distro) > 0
     # NOTE: Values for current_distro have to be the same as in Packages.csv
     if "ubuntu" in current_distro:
         current_distro = "ubuntu"
@@ -38,4 +37,6 @@ def grab_package_name(name: str):
                 return
 
 current_distro = None
-grab_package_name(input())
+from sys import argv
+assert len(argv) > 1
+grab_package_name(argv[1])
