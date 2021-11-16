@@ -5,8 +5,11 @@ cp "${projectDir}/Arch/CFG/xprofile/xprofile" "${HOME}/.xprofile"
 #i3
 mkdir -p "$HOME/.config/i3"
 mkdir -p "$HOME/.config/picom"
+mkdir -p "$HOME/.config/polybar"
 cp "${projectDir}/Arch/CFG/picom/picom.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/picom/picom.conf"  
 cp "${projectDir}/Arch/CFG/i3/config" "${XDG_CONFIG_HOME:-$HOME/.config}/i3/config"
+cp "${projectDir}/Arch/CFG/polybar/*" "${XDG_CONFIG_HOME:-$HOME/.config}/polybar/"
+
 
 #alacritty
 mkdir -p "$HOME/.config/alacritty"

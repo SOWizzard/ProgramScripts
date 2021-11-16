@@ -1,19 +1,21 @@
 # vim: filetype=i3config
 
-# This config file will use environment variables such as $BROWSER and $TERMINAL.
+# Apparence
+## Collors
+set $bgcolor   #C40233
+set $ibgcolor  #10100E 
+set $textcolor #C6C6C4
+set $ubcolor   #FFD700
 
-exec --no-startup-id- nm-applet
+## Window borders       border    background  text        indicator  
+client.focused          $bgcolor  $bgcolor    $textcolor  $bgcolor 
+client.focused_inactive $ibcolor  $ibgcolor   $textcolor  $ibgcolor    
+client.unfocused        $ibgcolor $ibgcolor   $textcolor  $ibgcolor    
+client.urgent           $ubcolor  $ubcolor    $textcolor  $ubcolor    
 
-bar {
-  position top
-  status_command i3status
-}
+font pango:Hack Nerd Font 14
 
-exec_always --no-startup-id autotiling
-exec_always --no-startup-id picom -b
-
-#
-# #---Basic Definitions---# #
+# Basic Definitions
 smart_gaps on
 smart_borders on
 set $inner_gaps 15
@@ -33,132 +35,58 @@ for_window [class="^.*"] border pixel 2
 gaps inner $inner_gaps
 gaps outer $outer_gaps
 
-# #---Basic Bindings---# #
-bindsym $mod+Return 		         exec i3-sensible-terminal
-bindsym $mod+Shift+Return	       exec i3-sensible-terminal --working-directory $(pwd)
+# #---Bindings---# #
+# My Bindings
+bindsym $mod+Return 		        exec i3-sensible-terminal
+bindsym $mod+w 			            exec --no-startup-id $BROWSER
+bindsym $mod+e 			            exec --no-startup-id nautilus
+bindsym $mod+d                  exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -b -i'
+#bindsym $mod+b			            exec --no-startup-id feh --bg-fill --randomize ~/Pictures/wallpapers/*
 
-bindsym $mod+Shift+Escape	       exec --no-startup-id $hibernate
-
-# bindsym $mod+BackSpace
-# bindsym $mod+Shift+BackSpace	   exec --no-startup-id prompt "Reboot computer?" $reboot
-
-# space
-
-
-# #---Letter Key Bindings---# #
+# I3 Bindings
+bindsym $mod+BackSpace          exec --no-startup-id prompt "Shutdown computer?" $shutdown
+bindsym $mod+Shift+BackSpace	  exec --no-startup-id prompt "Reboot computer?" $reboot
+bindsym $mod+Shift+e            exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+c 			            exec --no-startup-id $lock
+bindsym $mod+Shift+c		        exec --no-startup-id $suspend
+bindsym $mod+Shift+r            restart
 bindsym $mod+q			            [con_id="__focused__" instance="^(?!dropdown_).*$"] kill
 bindsym $mod+Shift+q		        [con_id="__focused__" instance="^(?!dropdown_).*$"] exec --no-startup-id kill -9 `xdotool getwindowfocus getwindowpid`
 
-# w
-bindsym $mod+w 			            exec --no-startup-id $BROWSER
-
-# c
-bindsym $mod+c 			            exec --no-startup-id lock
-bindsym $mod+Shift+c		        exec --no-startup-id $suspend
-
-# e
-bindsym $mod+e 			            exec --no-startup-id nautilus
-
-# r
-bindsym $mod+Shift+r            restart
-
-# t
-bindsym $mod+t 			            exec $term -e ytop
+# Mode bindings
 bindsym $mod+Shift+t            focus mode_toggle
-
-# y
-
-# u
 bindsym $mod+u                  [urgent=latest] focus
-
-# i
 bindsym $mod+i                  fullscreen disable; floating enable; resize set 1280 720; sticky enable; move position 4792 53
-
-# o
-
-# a
-
-# s
 bindsym $mod+s        			    sticky toggle;
 bindsym $mod+Shift+s			      split toggle
-
-# d
-bindsym $mod+d                  exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -b -i'
-
-#e
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-# f
 bindsym $mod+f			            fullscreen toggle
 bindsym $mod+Shift+f 	          floating toggle
-
-# g
 bindsym $mod+g		              gaps inner current set $inner_gaps; gaps outer current set $outer_gaps
 bindsym $mod+Shift+g		        gaps inner current set 0; gaps outer current set 0
 
-# h
+# Movement bindings
 bindsym $mod+h			            focus left
 bindsym $mod+Shift+h		        move left 30
 bindsym $mod+Ctrl+h		          move workspace to output left
-
-# j
 bindsym $mod+j			            focus down
 bindsym $mod+Shift+j		        move down 30
 bindsym $mod+Ctrl+j		          move workspace to output down
-
-# k
 bindsym $mod+k			            focus up
 bindsym $mod+Shift+k		        move up 30
 bindsym $mod+Ctrl+k		          move workspace to output up
-
-# l
 bindsym $mod+l			            focus right
 bindsym $mod+Shift+l		        move right 30
 bindsym $mod+Ctrl+l		          move workspace to output right
 
-
-# z
-
-# x
-bindsym $mod+x 			            exec --no-startup-id $reboot
-bindsym $mod+Shift+x		        exec --no-startup-id $shutdown
-
-# p
-
-# v
-
-# b
-bindsym $mod+b			            exec --no-startup-id feh --bg-fill --randomize ~/Pictures/wallpapers/*
-
-# n
-
-# m
-
-
-# #---Workspace Bindings---# #
-bindsym $mod+Tab		          workspace next
+# Workspace Bindings
+bindsym $mod+Tab		            workspace next
 bindsym $mod+Shift+Tab		      workspace previous
 bindsym $mod+apostrophe		      split horizontal ;; exec $term
 bindsym $mod+slash		          split vertical ;; exec $term
 bindsym $mod+Shift+slash	      kill
 bindsym $mod+backslash		      workspace back_and_forth
 
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
-
-# Assign Workspaces:
-
-# Assigning autofloat
-
-# switch to workspace
+# Switch to workspace
 bindsym $mod+1		workspace $ws1
 bindsym $mod+2		workspace $ws2
 bindsym $mod+3		workspace $ws3
@@ -170,7 +98,7 @@ bindsym $mod+8		workspace $ws8
 bindsym $mod+9		workspace $ws9
 bindsym $mod+0		workspace $ws10
 
-# move focused container to workspace
+# Move focused container to workspace
 bindsym $mod+Shift+1	move container to workspace $ws1
 bindsym $mod+Shift+2	move container to workspace $ws2
 bindsym $mod+Shift+3	move container to workspace $ws3
@@ -182,11 +110,7 @@ bindsym $mod+Shift+8	move container to workspace $ws8
 bindsym $mod+Shift+9	move container to workspace $ws9
 bindsym $mod+Shift+0	move container to workspace $ws10
 
-
-# #---Function Buttons---# #
-bindsym $mod+F1		        restart
-
-# #---Arrow Keys---# #
+# Arrow Keys
 bindsym $mod+Left		      focus left
 bindsym $mod+Shift+Left   resize shrink width 5 px or 5 ppt
 bindsym $mod+Ctrl+Left		move workspace to output right
@@ -205,10 +129,47 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% #decrease sound volume
 bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 
-# Window borders
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #abb2bf
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-client.background       #ffffff
+#Workspace names
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4: ﭮ"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9: "
+set $ws10 "10: "
+
+# Assign Workspaces:
+for_window [class="firefox"] move to workspace $ws1
+for_window [class="Spotify"] move to workspace $ws10
+for_window [class="discord"] move to workspace $ws4
+
+# Assigning autofloat
+
+
+# Inicial executions
+
+#Background image
+exec --no-startup-id- nitrogen --restore
+
+## Internet Manager
+exec --no-startup-id- nm-applet
+
+## Compositor
+exec_always --no-startup-id picom
+
+## Autotiling
+exec_always --no-startup-id autotiling
+
+## Polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+## I3 Bar
+#bar {
+#  position top
+#  status_command i3status
+#}
+
+
