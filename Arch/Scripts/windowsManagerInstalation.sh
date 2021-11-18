@@ -10,14 +10,14 @@ fi
 [ -z "$1" ] && error "choose a user"
 
 #Basic packages
-pacman --noconfirm --needed -S man-db man-pages texinfo inetutils netctl dhcpcd wpa_supplicant dialog linux-headers network-manager-applet sudo nvim nano git base-devel feh nitrogen pip
+pacman --noconfirm --needed -S man-db man-pages texinfo inetutils netctl dhcpcd wpa_supplicant dialog linux-headers network-manager-applet sudo nvim nano git base-devel feh nitrogen pip ranger yad flameshot
 
 #Xorg
 pacman --noconfirm --needed -S xorg-server xorg-xinit
 
 #DM
-pacman --noconfirm --needed -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
-systemctl enable lightdm
+yay -S ly
+systemctl enable ly.service
 
 #I3 ,Polybar, Font
 pacman --noconfirm --needed -S polybar
@@ -30,4 +30,4 @@ bash ./alacritty.sh
 
 #Browser #File manager
 pacman --noconfirm --needed -S firefox
-pacman --noconfirm --needed -S nautilus
+pacman --noconfirm --needed -S pacmanfm
